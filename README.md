@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MSU E-commerce Website
 
-## Getting Started
+## Setting Up Appwrite
 
-First, run the development server:
+This project uses Appwrite as the backend for authentication and database. Follow these steps to set up Appwrite for this project:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 1. Create an Appwrite Account
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+If you don't have an Appwrite account, sign up at [cloud.appwrite.io](https://cloud.appwrite.io).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. Create a New Project
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Log in to your Appwrite console
+2. Create a new project named "MSU Souvenirs"
+3. Copy the Project ID for later use
 
-## Learn More
+### 3. Set Up Authentication
 
-To learn more about Next.js, take a look at the following resources:
+1. Go to the "Auth" section in your Appwrite project
+2. Enable Email/Password authentication
+3. Configure the URL whitelist to include your development and production URLs
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 4. Create a Database
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Go to the "Databases" section and create a new database named "msu-souvenirs"
+2. Copy the Database ID for later use
 
-## Deploy on Vercel
+### 5. Create Collections
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Create the following collections in your database:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### Users Collection
+
+1. Create a collection named "users"
+2. Add the following attributes:
+   - userId (string, required)
+   - name (string, required)
+   - email (string, required)
+   - phone (string, optional)
+   - addresses (array of objects, optional)
+3. Set up appropriate permissions (allow read/write for authenticated users)
+4. Copy the Collection ID for later use
+
+#### Products Collection
+
+1. Create a collection named "products"
+2. Add the following attributes:
+   - name (string, required)
+   - description (string, required)
+   - price (number, required)
+   - images (array of strings, required)
+   - category (string, required)
+   - isNew (boolean, required)
+   - features (array of strings, optional)
+   - rating (number, optional)
+   - reviews (number, optional)
+   - inStock (boolean, required)
+3. Set up appropriate permissions (allow read for all, write for administrators)
+4. Copy the Collection ID for later use
+
+#### Orders Collection
+
+1. Create a collection named "orders"
+2. Add the following attributes:
+   - userId (string, required)
+   - items (array of objects, required)
+   - total (number, required)
+   - status (string, required)
+   - shippingAddress (object, required)
+   - createdAt (datetime, required)
+   - updatedAt (datetime, required)
+3. Set up appropriate permissions (allow read/write for authenticated users)
+4. Copy the Collection ID for later use
+
+### 6. Set Up Environment Variables
+
+Create a `.env.local` file in the root of your project with the following variables:
+
